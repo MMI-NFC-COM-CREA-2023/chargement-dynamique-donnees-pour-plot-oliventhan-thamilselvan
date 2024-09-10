@@ -5,23 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page avec Menu et Sous-parties</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6.0/dist/plot.umd.min.js"></script>
 </head>
 <body>
     <script>
-
         async function afficherPenguins() {
-    const penguinsReponse = await fetch("./penguins.json");
-    const penguins = await penguinsReponse.json();
-    console.log(penguins);
-    }
-    afficherPenguins();
+            try {
+                const penguinsReponse = await fetch("./penguins.json");
+                const penguins = await penguinsReponse.json();
+                
+                // Créer un graphique avec Plot
+                const chart = Plot.plot({
+                    marks: [
+                        Plot.dot(penguins, { x: "species", y: "flipper_length_mm" })
+                    ],
+                    width: 600,
+                    height: 400
+                });
 
-    async function afficherCars() {
-    const carsReponse = await fetch("./cars.json");
-    const cars = await carsReponse.json();
-    console.log(cars);
-    }
-    afficherCars();
+                // Ajouter le graphique au div
+                document.getElementById("div1").appendChild(chart);
+            } catch (error) {
+                console.error("Erreur lors du chargement des données des pingouins :", error);
+            }
+        }
+
+        async function afficherCars() {
+            try {
+                const carsReponse = await fetch("./cars.json");
+                const cars = await carsReponse.json();
+
+                // Créer un graphique avec Plot
+                const chart = Plot.plot({
+                    marks: [
+                        Plot.barY(cars, { x: "name", y: "horsepower" })
+                    ],
+                    width: 600,
+                    height: 400
+                });
+
+                // Ajouter le graphique au div
+                document.getElementById("div2").appendChild(chart);
+            } catch (error) {
+                console.error("Erreur lors du chargement des données des voitures :", error);
+            }
+        }
+
+        afficherPenguins();
+        afficherCars();
     </script>
 
     <nav>
@@ -38,8 +69,7 @@
             <img src="image1.jpg" alt="Description de l'image 1" width="300">
             <figcaption>Légende de l'image 1</figcaption>
         </figure>
-        <div id="div1" class="styled-div">
-        </div>
+        <div id="div1" class="styled-div"></div>
     </section>
 
     <section id="section2">
@@ -49,8 +79,7 @@
             <img src="image2.jpg" alt="Description de l'image 2" width="300">
             <figcaption>Légende de l'image 2</figcaption>
         </figure>
-        <div id="div2" class="styled-div">
-        </div>
+        <div id="div2" class="styled-div"></div>
     </section>
 </body>
 </html>
