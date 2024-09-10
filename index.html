@@ -7,6 +7,23 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <script>
+
+        async function afficherPenguins() {
+    const penguinsReponse = await fetch("./penguins.json");
+    const penguins = await penguinsReponse.json();
+    console.log(penguins);
+    }
+    afficherPenguins();
+
+    async function afficherCars() {
+    const carsReponse = await fetch("./cars.json");
+    const cars = await carsReponse.json();
+    console.log(cars);
+    }
+    afficherCars();
+    </script>
+
     <nav>
         <ul>
             <li><a href="#section1">Sous-partie 1</a></li>
